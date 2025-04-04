@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyzer Rowerowy</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Analyzer Rowerowy</h1>
+        <p>Narzędzie do analizy ogłoszeń rowerowych z OLX</p>
+    </header>
+
+    <div class="control-panel">
+        <div class="control-group">
+            <label for="pages">Liczba stron do przeszukania:</label>
+            <input type="number" id="pages" min="1" max="25" value="5">
+            <button id="scrapeBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                Pobierz dane z OLX
+            </button>
+            <button id="loadBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Załaduj zapisane dane
+            </button>
+            <button id="aiAnalyzeBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 16v-4"></path>
+                    <path d="M12 8h.01"></path>
+                </svg>
+                Analiza AI
+            </button>
+        </div>
+        
+        <div class="filter-group">
+            <div class="filter-item">
+                <label for="brand-filter">Marka:</label>
+                <select id="brand-filter">
+                    <option value="">Wszystkie</option>
+                </select>
+            </div>
+            <div class="filter-item">
+                <label for="size-filter">Rozmiar:</label>
+                <select id="size-filter">
+                    <option value="">Wszystkie</option>
+                </select>
+            </div>
+            <div class="filter-item">
+                <label for="price-min">Cena min:</label>
+                <input type="number" id="price-min" placeholder="min">
+            </div>
+            <div class="filter-item">
+                <label for="price-max">Cena max:</label>
+                <input type="number" id="price-max" placeholder="max">
+            </div>
+            <div class="filter-buttons">
+                <button id="filter-btn">Filtruj</button>
+                <button id="reset-filter-btn">Reset</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Container for progress display -->
+    <div id="progress-container" class="progress-container" style="display: none;">
+        <div class="progress-header">
+            <h3>Analiza AI w trakcie</h3>
+            <span id="progress-percentage">0%</span>
+        </div>
+        <div class="progress-bar-container">
+            <div id="progress-bar" class="progress-bar"></div>
+        </div>
+        <div id="progress-status" class="progress-status">Inicjalizacja analizy...</div>
+    </div>
+    
+    <main class="content">
+        <section class="charts">
+            <div class="chart-container">
+                <h2>Popularne marki</h2>
+                <canvas id="brandChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h2>Rozkład cen</h2>
+                <canvas id="priceChart"></canvas>
+            </div>
+        </section>
+        
+        <section class="statistics-section">
+            <h2>Statystyki</h2>
+            <div id="statistics" class="statistics-grid">
+                <div class="loading">Ładowanie statystyk...</div>
+            </div>
+        </section>
+        
+        <section class="bikes-section">
+            <h2>Ogłoszenia</h2>
+            <div id="bikes-table" class="bikes-table">
+                <div class="loading">Ładowanie ogłoszeń...</div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal do wyświetlania szczegółów analizy AI -->
+    <div id="aiDetailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Analiza AI</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div id="aiDetailsContent" class="modal-body">
+                <!-- Tu będą dynamicznie wstawiane szczegóły -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal do wyświetlania szczegółów technicznych roweru -->
+    <div id="bikeDetailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Szczegóły techniczne</h2>
+                <span class="close" onclick="document.getElementById('bikeDetailsModal').style.display='none'">&times;</span>
+            </div>
+            <div id="bikeDetailsContent" class="modal-body">
+                <!-- Tu będą dynamicznie wstawiane szczegóły techniczne -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Analyzer Rowerowy</p>
+    </footer>
+
+    <script src="/static/scripts.js"></script>
+</body>
+</html>

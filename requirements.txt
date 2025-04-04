@@ -1,0 +1,5 @@
+aiohttp==3.8.5
+asyncio==3.4.3
+beautifulsoup4==4.12.2
+pandas==2.1.0
+requests==2.31.0 
